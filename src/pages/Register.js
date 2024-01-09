@@ -1,7 +1,14 @@
 import React, { useState } from "react";
+import { register } from "../api/auth";
+import { useMutation } from "@tanstack/react-query";
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
+
+  const { mutate: addUser } = useMutation({
+    mutationKey: [`adduser`],
+    mutationFn: () => register(userInfo),
+  });
 
   const handleChange = (e) => {
     if (e.target.name === "image") {
@@ -12,8 +19,8 @@ const Register = () => {
   };
 
   const handleFormSubmit = (e) => {
-    // e.preventDefault();
-    // Add register logic here
+    e.preventDefault();
+    addUser();
   };
 
   return (
